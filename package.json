@@ -1,0 +1,27 @@
+{
+  "name": "live-transpile",
+  "version": "1.0.0",
+  "description": "Transpile your code on the fly",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/young/live-transpile.git"
+  },
+  "keywords": [
+    "es6",
+    "transpiler",
+    "service worker"
+  ],
+  "author": "Jem Young",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/young/live-transpile/issues"
+  },
+  "homepage": "https://github.com/young/live-transpile#readme",
+  "dependencies": {
+    "restify": "^4.0.4"
+  }
+}

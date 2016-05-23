@@ -1,0 +1,40 @@
+<html>
+<head>
+  <script src="highlight.pack.js"></script>
+  <link rel="stylesheet" type="text/css" href="styles/monokai.css">
+</head>
+<body>
+  <div class='main-container'>
+    <pre>
+      <code class="es6-code"></code>
+    </pre>
+  </div>
+
+  <script type='text/javascript'>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./worker.js');
+    }
+  </script>
+  <script type='text/javascript'>
+    hljs.configure({
+      tabReplace: '  ',
+      useBR: true,
+      languages: ['javascript']
+    });
+    navigator.serviceWorker.ready.then((e) => {
+      fetch('test-file.js').then(function(response) {
+        return response.blob();
+      }).then(function(response) {
+        const reader = new FileReader();
+        reader.onload = ({target: {result}}) => {
+          // Format code
+          const code = hljs.highlightAuto(result).value;
+          document.querySelector('.es6-code').innerHTML = hljs.fixMarkup(code);
+        };
+        reader.readAsText(response);
+      });
+    });
+  </script>
+</body>
+
+</html>
