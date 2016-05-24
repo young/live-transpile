@@ -1,7 +1,7 @@
 <html>
 <head>
   <script src="highlight.pack.js"></script>
-  <link rel="stylesheet" type="text/css" href="styles/monokai.css">
+  <link rel="stylesheet" type="text/css" href="styles/solarized-dark.css">
 </head>
 <body>
   <div class='main-container'>
@@ -11,29 +11,51 @@
   </div>
 
   <script type='text/javascript'>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./worker.js');
-    }
-  </script>
-  <script type='text/javascript'>
     hljs.configure({
       tabReplace: '  ',
       useBR: true,
       languages: ['javascript']
     });
-    navigator.serviceWorker.ready.then((e) => {
-      fetch('test-file.js').then(function(response) {
-        return response.blob();
-      }).then(function(response) {
-        const reader = new FileReader();
-        reader.onload = ({target: {result}}) => {
-          // Format code
-          const code = hljs.highlightAuto(result).value;
-          document.querySelector('.es6-code').innerHTML = hljs.fixMarkup(code);
-        };
-        reader.readAsText(response);
-      });
-    });
+
+    const fetchJS = () => {
+        fetch('test-file.js').then(function(response) {
+          return response.blob();
+        }).then(function(response) {
+          const reader = new FileReader();
+          reader.onload = ({target: {result}}) => {
+            // Format code
+            const code = hljs.highlightAuto(result).value;
+            document.querySelector('.es6-code').innerHTML = hljs.fixMarkup(code);
+          };
+          reader.readAsText(response);
+        });
+    };
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./worker.js')
+        .then((registration) => {
+          if (registration.installing) {
+            serviceWorker = registration.installing;
+          } else if (registration.waiting) {
+            serviceWorker = registration.waiting;
+          } else if (registration.active) {
+            serviceWorker = registration.active;
+          }
+
+          if (serviceWorker && serviceWorker.state !== 'activated' ) {
+            serviceWorker.addEventListener('statechange', function({target}) {
+              if (target.state === 'activated') {
+                fetchJS();
+              }
+            });
+          } else {
+            fetchJS();
+          }
+        })
+    }
+  </script>
+  <script type='text/javascript'>
+
   </script>
 </body>
 

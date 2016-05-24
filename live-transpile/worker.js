@@ -56,6 +56,10 @@ const oldBrowser = () => {
   return true;
 }
 
+this.onactivate = (event) => {
+  this.clients.claim();
+};
+
 this.onfetch = (event) => {
   const isJS = isRequestJS(event.request);
   if (isJS && oldBrowser()) {
