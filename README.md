@@ -7,8 +7,7 @@
 
 ## Note
 
-This is a proof of concept. Use this in production at your own risk.
-
+This is a proof of concept. Use this in production at your own risk :bomb:.
 
 ## Usage
  - `node app.js`
